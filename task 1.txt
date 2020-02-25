@@ -1,0 +1,49 @@
+
+create table autobus(
+id serial primary key,
+autobus_number integer unique not null,
+autobus_route integer references route(id)
+);
+
+insert into autobus (autobus_number,autobus_route)values(114,1);
+insert into autobus (autobus_number,autobus_route)values(128,2);
+insert into autobus (autobus_number,autobus_route)values(193,3);
+
+
+create table driver(
+id serial primary key,
+name varchar (50) not null unique
+);
+
+insert into driver (name)values('Nuraliev Anarbay');
+insert into driver (name)values('Nuraliev Azhimurat');
+insert into driver (name)values('Kuharenko Andrey');
+
+
+create table route(
+id serial primary key not null,
+autobus_from varchar (50) unique not null,
+autobus_to varchar (50)unique not null
+); 
+
+insert into route(autobus_from,autobus_to)values('vostok 5', 'centr');
+insert into route(autobus_from,autobus_to)values('tunguch', 'dordoi');
+insert into route(autobus_from,autobus_to)values('Alamedin', 'Djal');
+
+create table journal(
+id serial primary key not null,
+driver_id integer references driver(id) not null,
+autobus_id integer references autobus(id)not null,
+activitydrive timestamp not null
+); 
+
+insert into journal(driver_id,autobus_id,activitydrive)values(1,1,current_timestamp);
+insert into journal(driver_id,autobus_id,activitydrive)values(2,2,current_timestamp);
+insert into journal(driver_id,autobus_id,activitydrive)values(3,3,current_timestamp);
+
+insert into journal(driver_id,autobus_id,activitydrive)values(1,2,current_timestamp);
+insert into journal(driver_id,autobus_id,activitydrive)values(2,1,current_timestamp);
+insert into journal(driver_id,autobus_id,activitydrive)values(3,3,current_timestamp);
+
+
+
